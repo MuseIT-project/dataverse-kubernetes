@@ -94,6 +94,7 @@ if [ "${INIT_SCRIPTS_FOLDER}" ]; then
         done
 fi
 touch ${PAYARA_DIR}/glassfish/domains/${DOMAIN_NAME}/applications/dataverse/.reload
+sleep 15
 
 if [ "${INIT_SCRIPTS_FOLDER}" ]; then
     for initscript in $INIT_SCRIPTS_FOLDER/1*
