@@ -5,6 +5,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 FROM payara/server-full:5.2021.1-jdk11
+#FROM payara/server-full:5.2022.2-jdk11
 LABEL maintainer="FDM FZJ <forschungsdaten@fz-juelich.de>, DANS <vyacheslav.tykhonov@dans.knaw.nl>"
 
 ARG VERSION=5.10
@@ -13,7 +14,7 @@ ARG DOMAIN=domain1
 ENV DEBIAN_FRONTEND=noninteractive
 
 ENV DATA_DIR=/data\
-    DOCROOT_DIR=/opt/docroot\
+    DOCROOT_DIR=/opt/payara/docroot\
     METADATA_DIR=/metadata\
     SECRETS_DIR=/secrets\
     DUMPS_DIR=/dumps\
@@ -28,11 +29,11 @@ ENV DATA_DIR=/data\
 USER root
 RUN mkdir -p ${HOME_DIR} ${SCRIPT_DIR} ${SECRETS_DIR} && \
     mkdir -p ${DATA_DIR} ${METADATA_DIR} ${DOCROOT_DIR} ${DUMPS_DIR} && \
-    chown -R payara: ${DATA_DIR} ${METADATA_DIR} ${DOCROOT_DIR} ${SECRETS_DIR} ${DUMPS_DIR}
+    chown -R payara: ${DATA_DIR} ${METADATA_DIR} ${DOCROOT_DIR} ${SECRETS_DIR} ${DUMPS_DIR} ${DOMAIN_DIR}
 
 # Install prerequisites
 RUN apt-get -qq update && \
-    apt-get -qqy install postgresql-client jq imagemagick curl wget unzip vim awscli python3-psycopg2 ed bc original-awk
+    apt-get -qqy install postgresql-client jq imagemagick curl wget unzip vim awscli python3-psycopg2 ed bc original-awk python3-pandas lsb-release patch
 
 # Install Azure CLI
 RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
