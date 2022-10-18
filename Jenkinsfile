@@ -35,11 +35,11 @@ pipeline {
                     sh 'curl https://raw.githubusercontent.com/IQSS/dataverse-docker/master/.env_sample -o .env' 
                     sh 'docker-compose -f ./docker-compose.yaml up -d'
                     sh 'docker ps'
-                    sh 'docker exec -it dataverse echo "test"'
-                    sh 'sleep 320s'
+                    sh 'sleep 200s'
+                    sh 'docker exec -it dataverse bash /secrets/db_sample.sh'
                     sh 'export PGPASSWORD=`cat ./personas/docker-compose/secrets/db/password`'
                     sh 'echo $PGPASSWORD'
-                    sh 'psql -U dataverse dataverse -h postgres -c "select * from dvobject"'
+                    sh 'docker exec -it dataverse psql -U dataverse dataverse -h postgres -c "select * from dvobject"'
                     sh 'curl http://0.0.0.0:8080'
                 }
             }
