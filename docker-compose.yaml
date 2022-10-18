@@ -3,8 +3,6 @@ version: '3.5'
 services:
 
   postgresql:
-    networks:
-      - traefik
     container_name: postgres
     image: library/postgres:10.13
     restart: unless-stopped
@@ -19,15 +17,13 @@ services:
       - 5432
 
   solr:
-    networks:
+    container_name: solr
       - traefik
     image: coronawhy/solr:8.9.0
     expose:
       - 8983
 
   dataverse:
-    networks:
-      - traefik
     container_name: dataverse
     user:
       "root"
@@ -46,6 +42,3 @@ services:
         target: /secrets
         #read_only: true
 
-networks:
-  traefik:
-    external: true
