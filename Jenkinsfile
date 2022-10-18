@@ -11,7 +11,7 @@ pipeline {
             steps {
                 echo "Preparing fully containerized environment - :)"
                 dir ('./docker/dataverse-k8s/payara') {
-                    sh 'docker-compose -f docker-compose.yml up -d'
+                    sh 'docker-compose -f ./docker/dataverse-k8s/payara/docker-compose.yml up -d'
                 }
             }
         }
