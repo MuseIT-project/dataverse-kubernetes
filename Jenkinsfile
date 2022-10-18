@@ -3,9 +3,7 @@
 def projectConfig
 
 pipeline {
-    agent {
-        dockerfile true
-    }
+    agent any
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
