@@ -10,11 +10,14 @@ pipeline {
     }
 
     stages {
-        stage('SQA baseline dynamic stages') {
+        stage('SQA : plain code checks') {
             steps {
-                script {
-                    projectConfig = pipelineConfig()
-                    buildStages(projectConfig)
+                catchError {
+                    script {
+                        projectConfigPlain = pipelineConfig(
+                            configFile: '.sqa/config.yml')
+                        buildStages(projectConfigPlain)
+                    }
                 }
             }
             post {
