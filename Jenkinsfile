@@ -32,7 +32,6 @@ pipeline {
             steps {
                 echo "Preparing fully containerized environment - :)"
                 dir ('./') {
-                    sh 'docker-compose -f docker-compose.yaml down'
                     sh 'docker-compose -f docker-compose.yaml up -d'
                     sh 'sleep 200s'
                     sh 'docker exec dataverse bash /secrets/db_sample.sh'
