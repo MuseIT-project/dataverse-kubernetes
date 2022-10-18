@@ -39,7 +39,7 @@ pipeline {
                     sh 'echo $PGPASSWORD'
                     sh 'curl http://0.0.0.0:8080'
                     sh 'sh ./test/test_upload.sh'
-                    sh 'curl http://0.0.0.0:8080/oai?verb=GetRecord&metadataPrefix=oai_dc&identifier=doi:10.34622/datarepositorium/SGXCQO'
+                    sh 'curl "http://0.0.0.0:8080/oai?verb=GetRecord&metadataPrefix=oai_dc&identifier=doi:10.34622/datarepositorium/SGXCQO"'
                 }
             }
         }
