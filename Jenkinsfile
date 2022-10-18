@@ -44,7 +44,7 @@ pipeline {
                 echo "Checking Dataverse environment - :)"
                 dir ('./') {
                     sh 'docker ps'
-                    sh 'curl dataverse:8080'
+                    sh 'sleep 30s;curl dataverse:8080'
                 }
             }
         }
