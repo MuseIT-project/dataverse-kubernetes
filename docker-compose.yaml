@@ -18,7 +18,6 @@ services:
 
   solr:
     container_name: solr
-      - traefik
     image: coronawhy/solr:8.9.0
     expose:
       - 8983
