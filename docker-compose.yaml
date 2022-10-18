@@ -5,6 +5,7 @@ services:
   postgresql:
     networks:
       - traefik
+    container_name: postgres
     image: library/postgres:10.13
     restart: unless-stopped
     environment:
