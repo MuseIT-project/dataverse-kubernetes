@@ -35,6 +35,7 @@ pipeline {
                     sh 'curl https://raw.githubusercontent.com/IQSS/dataverse-docker/master/.env_sample -o .env' 
                     sh 'docker-compose -f ./docker-compose.yaml up -d'
                     sh 'docker ps'
+                    sh 'docker exec -it dataverse echo "test"'
                     sh 'sleep 320s'
                     sh 'export PGPASSWORD=`cat ./personas/docker-compose/secrets/db/password`'
                     sh 'echo $PGPASSWORD'
