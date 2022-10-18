@@ -36,7 +36,6 @@ pipeline {
                 }
             }
         }
-        }
 
         stage('Checking Dataverse availability') {
             agent any
