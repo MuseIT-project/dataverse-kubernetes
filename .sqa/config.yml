@@ -2,8 +2,21 @@ config:
   project_repos:
     myrepo:
       repo: 'https://github.com/EOSC-synergy/dataverse-kubernetes'
+      branch: 5.12
+    github.com/EOSC-synergy/sqaaas-tooling:
+      branch: release/1.4.0
+      repo: https://github.com/EOSC-synergy/sqaaas-tooling
+
 sqa_criteria:
   qc_style:
      repos:
        myrepo:
          container: dataverse
+  QC.FAIR:
+    repos:
+      this_repo:
+        commands:
+        - fair-eva.py -ID 123456789/24 -R dspace7
+          -B https://dspace-rest/request --tool_endpoint http://dspace-fair:9090/v1.0/rda/rda_all
+        container: qc.fair_snazzy-malachite-quoll
+timeout: 600
