@@ -16,5 +16,15 @@ pipeline {
                 sh "docker build -t dataverse:latest -f docker/dataverse-k8s/payara/Dockerfile ."
                 }
             }
+
+        stage('Preparing Dataverse for integration tests') {
+            agent any
+            steps {
+                echo "Preparing fully containerized environment - :)"
+                dir ('./docker/dataverse-k8s/payara') {
+                    sh 'docker-compose -f docker-compose.yml up -d'
+                }
+            }
+        }
         }
 }
