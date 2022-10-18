@@ -91,6 +91,9 @@ services:
       - "PGPASSWORD"
     volumes:
       - type: bind
+        source: ./data
+        target: /data
+      - type: bind
         source: ./personas/docker-compose/secrets
         target: /secrets
         #read_only: true
