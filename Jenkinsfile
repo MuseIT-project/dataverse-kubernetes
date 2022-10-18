@@ -38,6 +38,7 @@ pipeline {
                     sh 'sleep 220s'
                     sh 'export PGPASSWORD=`cat /secrets/db/password`'
                     sh 'echo $PGPASSWORD'
+                    sh 'psql -U dataverse dataverse -h postgres -c "select * from dvobject"'
                     sh 'curl http://0.0.0.0:8080'
                 }
             }
