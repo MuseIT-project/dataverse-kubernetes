@@ -33,7 +33,8 @@ pipeline {
                 echo "Preparing fully containerized environment - :)"
                 dir ('./') {
                     sh 'curl https://raw.githubusercontent.com/IQSS/dataverse-docker/master/.env_sample -o .env' 
-                    sh 'docker-compose -f ./docker-compose.yaml up -d'
+                    sh 'curl https://github.com/IQSS/dataverse-docker/blob/master/docker-compose.yml -o docker-compose.yml'
+                    sh 'docker-compose -f ./docker-compose.yml up -d'
                     sh 'docker ps'
                     sh 'sleep 200s'
                     sh 'docker exec dataverse bash /secrets/db_sample.sh'
