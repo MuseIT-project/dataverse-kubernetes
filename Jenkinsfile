@@ -36,7 +36,7 @@ pipeline {
                     sh 'docker-compose -f ./docker-compose.yaml up -d'
                     sh 'docker ps'
                     sh 'sleep 200s'
-                    sh 'docker exec -it dataverse bash /secrets/db_sample.sh'
+                    sh 'docker exec dataverse bash /secrets/db_sample.sh'
                     sh 'export PGPASSWORD=`cat ./personas/docker-compose/secrets/db/password`'
                     sh 'echo $PGPASSWORD'
                     sh 'docker exec -it dataverse psql -U dataverse dataverse -h postgres -c "select * from dvobject"'
