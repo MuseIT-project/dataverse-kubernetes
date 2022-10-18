@@ -37,4 +37,15 @@ pipeline {
             }
         }
         }
+
+        stage('Checking Dataverse availability') {
+            agent any
+            steps {
+                echo "Checking Dataverse environment - :)"
+                dir ('./') {
+                    sh 'curl dataverse:8080'
+                }
+            }
+        }
+        }
 }
