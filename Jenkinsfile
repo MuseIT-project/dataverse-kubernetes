@@ -1,3 +1,7 @@
+@Library(['github.com/indigo-dc/jenkins-pipeline-library@2.1.1']) _
+
+def projectConfig
+
 pipeline {
     agent any
 
@@ -6,6 +10,20 @@ pipeline {
     }
 
     stages {
+        stage('SQA baseline dynamic stages') {
+            steps {
+                script {
+                    projectConfig = pipelineConfig()
+                    buildStages(projectConfig)
+                }
+            }
+            post {
+                cleanup {
+                    cleanWs()
+                }
+            }
+        }
+
         stage('Preparing Dataverse for integration tests') {
             agent any
             steps {
