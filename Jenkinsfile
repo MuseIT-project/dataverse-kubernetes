@@ -28,9 +28,8 @@ pipeline {
         }
 
         stage('Preparing Dataverse for integration tests') {
-
+            agent any
             steps {
-                agent any
                 echo "Preparing fully containerized environment - :)"
                 dir ('./') {
                     sh 'docker-compose -f docker-compose.yaml up -d'
