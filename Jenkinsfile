@@ -33,6 +33,7 @@ pipeline {
                 echo "Preparing fully containerized environment - :)"
                 dir ('./') {
                     sh 'docker-compose -f ./docker-compose.yaml up -d'
+                    sh 'curl http://dataverse:8080'
                 }
             }
         }
