@@ -6,17 +6,6 @@ pipeline {
     }
 
     stages {
-        stage('Trigger Dataverse CICD job') {
-            when {
-                anyOf {
-                    branch '5.12'
-                }
-            }
-            steps {
-                sh "docker build -t dataverse:latest -f docker/dataverse-k8s/payara/Dockerfile ."
-                }
-            }
-
         stage('Preparing Dataverse for integration tests') {
             agent any
             steps {
