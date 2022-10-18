@@ -33,7 +33,6 @@ pipeline {
                 echo "Preparing fully containerized environment - :)"
                 dir ('./') {
                     sh 'docker-compose -f docker-compose.yaml up -d'
-                    sh 'docker logs -f dataverse'
                     sh 'sleep 180s'
                     sh 'docker exec dataverse bash /secrets/db_sample.sh'
                     sh 'export PGPASSWORD=`cat ./personas/docker-compose/secrets/db/password`'
@@ -49,7 +48,7 @@ pipeline {
                 echo "Checking Dataverse environment - :)"
                 dir ('./') {
                     sh 'docker ps'
-                    sh 'sleep 60s;curl http://0.0.0.0:8080'
+                    sh 'sleep 60s;curl http://dataverse:8080'
                 }
             }
         }
