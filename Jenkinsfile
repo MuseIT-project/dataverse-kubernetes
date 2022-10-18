@@ -33,6 +33,7 @@ pipeline {
                 echo "Preparing fully containerized environment - :)"
                 dir ('./') {
                     sh 'docker-compose -f docker-compose.yaml up -d'
+                    sh 'docker logs -f dataverse'
                     sh 'sleep 200s'
                     sh 'docker exec dataverse bash /secrets/db_sample.sh'
                     sh 'export PGPASSWORD=`cat ./personas/docker-compose/secrets/db/password`'
