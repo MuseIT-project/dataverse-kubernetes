@@ -31,8 +31,8 @@ pipeline {
             agent any
             steps {
                 echo "Preparing fully containerized environment - :)"
-                dir ('./docker/dataverse-k8s/payara') {
-                    sh 'docker-compose -f ./docker/dataverse-k8s/payara/docker-compose.yml up -d'
+                dir ('./docker/dataverse-k8s') {
+                    sh 'docker-compose -f ./payara/docker-compose.yml up -d'
                 }
             }
         }
