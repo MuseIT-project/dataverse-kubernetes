@@ -3,13 +3,9 @@
 def projectConfig
 
 pipeline {
-agent { 
-    docker {
-        image 'image-docker-1'
-        args '--entrypoint="" -u root -v /var/run/docker.sock:/var/run/docker.sock'
-        label 'slave-1'
+    agent {
+        dockerfile true
     }
-}
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
