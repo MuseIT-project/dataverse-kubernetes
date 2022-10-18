@@ -39,7 +39,7 @@ pipeline {
                     sh 'docker exec dataverse bash /secrets/db_sample.sh'
                     sh 'export PGPASSWORD=`cat ./personas/docker-compose/secrets/db/password`'
                     sh 'echo $PGPASSWORD'
-                    sh 'docker exec -it dataverse psql -U dataverse dataverse -h postgres -c "select * from dvobject"'
+                    sh 'docker exec dataverse psql -U dataverse dataverse -h postgres -c "select * from dvobject"'
                     sh 'curl http://0.0.0.0:8080'
                 }
             }
