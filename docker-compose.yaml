@@ -3,6 +3,8 @@ version: '3.5'
 services:
 
   postgresql:
+    networks:
+      - traefik
     image: library/postgres:10.13
     restart: unless-stopped
     environment:
@@ -16,11 +18,15 @@ services:
       - 5432
 
   solr:
+    networks:
+      - traefik
     image: coronawhy/solr:8.9.0
     expose:
       - 8983
 
   dataverse:
+    networks:
+      - traefik
     container_name: dataverse
     user:
       "root"
@@ -38,3 +44,7 @@ services:
         source: ./personas/docker-compose/secrets
         target: /secrets
         #read_only: true
+
+networks:
+  traefik:
+    external: true
