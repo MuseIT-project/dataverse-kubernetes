@@ -34,7 +34,7 @@ pipeline {
                 dir ('./') {
                     sh 'docker-compose -f docker-compose.yaml down'
                     sh 'docker-compose -f docker-compose.yaml up -d'
-                    sh 'sleep 60s'
+                    sh 'sleep 200s'
                     sh 'docker exec dataverse bash /secrets/db_sample.sh'
                     sh 'export PGPASSWORD=`cat ./personas/docker-compose/secrets/db/password`'
                     sh 'echo $PGPASSWORD'
