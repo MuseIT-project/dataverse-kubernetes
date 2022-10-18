@@ -34,7 +34,7 @@ pipeline {
                 dir ('./') {
                     sh 'docker-compose -f ./docker-compose.yaml up -d'
                     sh 'docker ps'
-                    sh 'sleep 360s;curl http://dataverse:8080'
+                    sh 'sleep 60s;curl http://0.0.0.0:8080'
                 }
             }
         }
@@ -45,7 +45,7 @@ pipeline {
                 echo "Checking Dataverse environment - :)"
                 dir ('./') {
                     sh 'docker ps'
-                    sh 'sleep 80s;curl dataverse:8080'
+                    sh 'sleep 60s;curl http://0.0.0.0:8080'
                 }
             }
         }
