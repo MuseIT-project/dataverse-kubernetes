@@ -21,6 +21,7 @@ services:
       - 8983
 
   dataverse:
+    container_name: dataverse
     user:
       "root"
     build:
