@@ -38,6 +38,8 @@ pipeline {
                     sh 'export PGPASSWORD=`cat ./personas/docker-compose/secrets/db/password`'
                     sh 'echo $PGPASSWORD'
                     sh 'curl http://0.0.0.0:8080'
+                    sh 'sh ./test/test_upload.sh'
+                    sh 'curl http://0.0.0.0:8080'
                 }
             }
         }
@@ -47,7 +49,7 @@ pipeline {
             steps {
                 echo "Checking Dataverse environment - :)"
                 dir ('./') {
-                    sh 'docker-compose -f docker-compose.yaml up -d'
+                    sh 'docker ps'
                     sh 'sleep 60s;curl http://dataverse:8080'
                 }
             }
