@@ -28,7 +28,12 @@ pipeline {
         }
 
         stage('Preparing Dataverse for integration tests') {
-            agent any
+            agent {
+                dockerfile {
+                    reuseNode true
+                }
+            }
+
             steps {
                 echo "Preparing fully containerized environment - :)"
                 dir ('./') {
@@ -49,7 +54,11 @@ pipeline {
         }
 
         stage('Checking Dataverse availability') {
-            agent any
+            agent {
+                dockerfile {
+                    reuseNode true
+                }
+            }
             steps {
                 echo "Checking Dataverse environment - :)"
                 dir ('./') {
