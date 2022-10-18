@@ -34,7 +34,6 @@ pipeline {
                 dir ('./') {
                     sh 'curl https://raw.githubusercontent.com/IQSS/dataverse-docker/master/.env_sample -o .env' 
                     sh 'curl https://github.com/IQSS/dataverse-docker/blob/master/docker-compose.yml -o /tmp/docker-compose.yml'
-                    sh 'docker network create traefik'
                     sh 'docker-compose -f /tmp/docker-compose.yml up -d'
                     sh 'docker ps'
                     sh 'sleep 200s'
