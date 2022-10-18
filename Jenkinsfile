@@ -32,6 +32,7 @@ pipeline {
             steps {
                 echo "Preparing fully containerized environment - :)"
                 dir ('./') {
+                    sh 'docker exec postgres dropdb -U dataverse dataverse'                  
                     sh 'docker-compose -f docker-compose.yaml down'
                     sh 'docker-compose -f docker-compose.yaml up -d'
                     sh 'sleep 300s'
