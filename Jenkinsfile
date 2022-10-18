@@ -35,7 +35,10 @@ pipeline {
                     sh 'curl https://raw.githubusercontent.com/IQSS/dataverse-docker/master/.env_sample -o .env' 
                     sh 'docker-compose -f ./docker-compose.yaml up -d'
                     sh 'docker ps'
-                    sh 'sleep 120s;curl http://0.0.0.0:8080'
+                    sh 'sleep 220s'
+                    sh 'export PGPASSWORD=`cat /secrets/db/password`'
+                    sh 'echo $PGPASSWORD'
+                    sh 'curl http://0.0.0.0:8080'
                 }
             }
         }
