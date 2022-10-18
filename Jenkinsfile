@@ -34,7 +34,7 @@ pipeline {
                 dir ('./') {
                     sh 'docker-compose -f ./docker-compose.yaml up -d'
                     sh 'docker ps'
-                    sh 'sleep 80s;curl http://dataverse:8080'
+                    sh 'sleep 360s;curl http://dataverse:8080'
                 }
             }
         }
