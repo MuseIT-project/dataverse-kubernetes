@@ -1,0 +1,106 @@
+---
+version: '3.5'
+services:
+  qc.fair_snazzy-malachite-quoll:
+    build:
+     context: ./github.com/EOSC-synergy/sqaaas-tooling/QC.FAIR
+     dockerfile: Dockerfile
+    volumes:
+    - source: ./
+      target: /sqaaas-build
+      type: bind
+    working_dir: /sqaaas-build
+
+  postgresql:
+    container_name: postgres
+    image: library/postgres:10.13
+    restart: unless-stopped
+    environment:
+      - "LC_ALL"
+      - "POSTGRES_DB=dataverse"
+      - "POSTGRES_USER=dataverse"
+      - "POSTGRES_PASSWORD=changeme"
+      - "POSTGRES_PORT=5432"
+    env_file: .env
+    expose:
+      - 5432
+
+  solr:
+    container_name: solr
+    image: coronawhy/solr:8.9.0
+    expose:
+      - 8983
+
+  dataverse:
+    container_name: dataverse
+    user:
+      "root"
+    build:
+      context: .
+      dockerfile: ./docker/dataverse-k8s/payara/Dockerfile
+    depends_on:
+      - postgresql
+      - solr
+    ports:
+      - 8080:8080
+    env_file: .env
+    environment:
+      - "CVM_SERVER_NAME=CESSDA" #Optional
+      - "WEBHOOK"
+      - "CESSDA"
+      - "CLARIN"
+      - "doi_authority"
+      - "doi_provider"
+      - "doi_username"
+      - "doi_password"
+      - "dataciterestapiurlstring"
+      - "baseurlstring"
+      - "aws_bucket_name"
+      - "aws_s3_profile"
+      - "aws_endpoint_url"
+      - "system_email"
+      - "mailhost"
+      - "mailuser"
+      - "no_reply_email"
+      - "smtp_password"
+      - "smtp_port"
+      - "socket_port"
+      - "federated_json_file"
+      - "bucketname_1"
+      - "minio_label_1"
+      - "minio_bucket_1"
+      - "bucketname_2"
+      - "minio_profile_1"
+      - "minio_label_2"
+      - "minio_bucket_2"
+      - "minio_profile_2"
+      - "DATAVERSE_DB_HOST"
+      - "DATAVERSE_DB_USER"
+      - "DATAVERSE_DB_PASSWORD"
+      - "DATAVERSE_DB_NAME"
+      - "DATAVERSE_SERVICE_HOST"
+      - "DATAVERSE_URL"
+      - "SOLR_SERVICE_HOST"
+      - "SOLR_SERVICE_PORT"
+      - "CVM_SERVER_URL=https://ns.${traefikhost}"
+      - "LANG=en"
+      - "cvManager=http://"
+      - "BUNDLEPROPERTIES=Bundle.properties"
+      - "ADMIN_EMAIL=admin@localhost"
+      - "MAIL_SERVER=mailrelay"
+      - "SOLR_LOCATION=solr:8983"
+      - "INIT_SCRIPTS_FOLDER"
+      - "hostname"
+      - "MAINLANG"
+      - "POSTGRES_SERVER"
+      - "POSTGRES_PORT"
+      - "POSTGRES_DATABASE"
+      - "POSTGRES_USER"
+      - "POSTGRES_PASSWORD"
+      - "PGPASSWORD"
+    volumes:
+      - type: bind
+        source: ./personas/docker-compose/secrets
+        target: /secrets
+        #read_only: true
+
