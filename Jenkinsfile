@@ -49,14 +49,5 @@ pipeline {
             }
         }
 
-        stage('Checking Dataverse availability') {
-            steps {
-                echo "Checking Dataverse environment - :)"
-                dir ('./') {
-                    sh 'docker ps'
-                    sh 'sleep 60s;curl http://dataverse:8080'
-                }
-            }
-        }
         }
 }
