@@ -44,6 +44,8 @@ pipeline {
                     sh 'docker exec dataverse curl http://localhost:8080/api/admin/metadata/exportAll'
                     sh 'docker exec dataverse curl http://localhost:8080/api/admin/metadata/reExportAll'
                     sh 'sleep 10s'
+                    sh 'curl "http://0.0.0.0:8080/api/datasets/export?exporter=dataverse_json&persistentId=doi:10.34622/datarepositorium/SGXCQO"'
+                    sh 'curl "http://0.0.0.0:8080/api/datasets/export?exporter=dcterms&persistentId=doi:10.34622/datarepositorium/SGXCQO"'
                     sh 'curl "http://0.0.0.0:8080/oai?verb=GetRecord&metadataPrefix=oai_dc&identifier=doi:10.34622/datarepositorium/SGXCQO"'
                 }
             }
