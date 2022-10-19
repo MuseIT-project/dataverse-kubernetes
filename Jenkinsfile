@@ -50,6 +50,7 @@ pipeline {
                     sh 'curl "http://0.0.0.0:8080/api/datasets/export?exporter=dataverse_json&persistentId=doi:10.34622/datarepositorium/SGXCQO"'
                     sh 'curl "http://0.0.0.0:8080/api/datasets/export?exporter=dcterms&persistentId=doi:10.34622/datarepositorium/SGXCQO"'
                     sh 'curl "http://0.0.0.0:8080/oai?verb=GetRecord&metadataPrefix=oai_dc&identifier=doi:10.34622/datarepositorium/SGXCQO"'
+                    sh "curl --location --request POST 'http://0.0.0.0:9090/v1.0/rda/rda_all' --header 'Content-Type: application/json' --header 'Cookie: Cookie_1=foobar' --data-raw '{ 'id': 'https://doi.org/10.34622/datarepositorium/SGXCQO', 'repo': 'oai-pmh', 'oai_base': 'http://0.0.0.0:8080/oai', 'lang': 'en' }"
                 }
             }
         }
