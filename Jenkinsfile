@@ -33,7 +33,7 @@ pipeline {
                 echo "Preparing fully containerized environment - :)"
                 dir ('./') {
                     sh 'cd FAIR_eva;docker build --no-cache -t fair_eva .'
-                    sh 'docker run --name=fair_eva -p 9090:9090 -p 5000:5000 fair_eva;cd ..'
+                    sh 'docker run --name=fair_eva -d -p 9090:9090 -p 5000:5000 fair_eva;cd ..'
                     sh 'docker stop dataverse'
                     sh 'docker-compose -f docker-compose.yaml up -d'
                     sh 'sleep 300s'
