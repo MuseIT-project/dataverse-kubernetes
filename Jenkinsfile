@@ -33,7 +33,7 @@ pipeline {
                 echo "Preparing fully containerized environment - :)"
                 dir ('./') {
                     sh 'docker stop dataverse'
-                    sh 'docker-compose -f docker-compose-fair.yaml up -d'
+                    sh 'docker-compose -f docker-compose.yaml up -d'
                     sh 'sleep 300s'
                     sh 'docker logs dataverse'
                     sh 'docker exec dataverse bash /secrets/db_sample.sh'
