@@ -32,6 +32,8 @@ pipeline {
             steps {
                 echo "Preparing fully containerized environment - :)"
                 dir ('./') {
+                    sh 'git clone https://github.com/EOSC-synergy/FAIR_eva'
+                    sh 'cd FAIR_eva;docker run --name=fair_eva -p 9090:9090 -p 5000:5000 -dit --network host'
                     sh 'docker stop dataverse'
                     sh 'docker-compose -f docker-compose.yaml up -d'
                     sh 'sleep 300s'
@@ -39,6 +41,7 @@ pipeline {
                     sh 'docker exec dataverse bash /secrets/db_sample.sh'
                     sh 'export PGPASSWORD=`cat ./personas/docker-compose/secrets/db/password`'
                     sh 'echo $PGPASSWORD'
+                    sh 'curl http://0.0.0.0:9090/v1.0/rda/rda_all'
                     sh 'curl http://0.0.0.0:8080'
                     sh 'sh ./test/test_upload.sh'
                     sh 'docker exec dataverse curl http://localhost:8080/api/admin/metadata/exportAll'
