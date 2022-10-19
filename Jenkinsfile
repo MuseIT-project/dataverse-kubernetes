@@ -33,7 +33,7 @@ pipeline {
                 echo "Preparing fully containerized environment - :)"
                 dir ('./') {
                     sh 'git clone https://github.com/EOSC-synergy/FAIR_eva'
-                    sh 'cd FAIR_eva;docker run --name=fair_eva -p 9090:9090 -p 5000:5000 -dit --network host'
+                    sh 'cd FAIR_eva;docker run --name=fair_eva -p 9090:9090 -p 5000:5000 -dit --network host;cd ..'
                     sh 'docker stop dataverse'
                     sh 'docker-compose -f docker-compose.yaml up -d'
                     sh 'sleep 300s'
