@@ -32,7 +32,7 @@ pipeline {
             steps {
                 echo "Preparing fully containerized environment - :)"
                 dir ('./') {
-                    sh 'git clone https://github.com/EOSC-synergy/FAIR_eva'
+#                    sh 'git clone https://github.com/EOSC-synergy/FAIR_eva'
                     sh 'cd FAIR_eva;docker build --no-cache -t fair_eva .'
                     sh 'docker run --name=fair_eva -p 9090:9090 -p 5000:5000 fair_eva;cd ..'
                     sh 'docker stop dataverse'
