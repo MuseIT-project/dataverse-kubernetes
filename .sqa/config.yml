@@ -5,7 +5,7 @@ config:
       repo: https://github.com/EOSC-synergy/FAIR_eva
 
 sqa_criteria:
-  qc_style:
+  QC.Sty:
      repos:
        dataverse:
          container: dataverse
