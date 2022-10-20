@@ -3,21 +3,23 @@
 def projectConfig
 
 pipeline {
-    agent any
+    agent { label 'svclarge' }
 
     options {
+        lock('svclarge')
+        throttle(['StandaloneByNode'])
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
 
     stages {
         stage('SQA : plain code checks') {
             steps {
-                catchError {
-                    script {
-                        projectConfigPlain = pipelineConfig(
-                            configFile: '.sqa/config.yml')
-                        buildStages(projectConfigPlain)
-                    }
+                script {
+                    projectConfig = pipelineConfig(
+                        configFile: '.sqa/config.yml',
+                        scmConfigs: [ localBranch: true ],
+                        validatorDockerImage: 'eoscsynergy/jpl-validator:2.4.0')
+                    buildStages(projectConfig)
                 }
             }
             post {

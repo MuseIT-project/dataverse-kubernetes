@@ -6,8 +6,12 @@ services:
     build: ./FAIR_eva/.
     ports: 
      - 9090:9090
+    networks:
+     - fair_net
+    depends_on:
+      - dataverse
 
-  postgresql:
+  postgres:
     container_name: postgres
     image: library/postgres:10.13
     restart: unless-stopped
@@ -20,12 +24,16 @@ services:
     env_file: .env
     expose:
       - 5432
+    networks:
+      - fair_net
 
   solr:
     container_name: solr
     image: coronawhy/solr:8.9.0
     expose:
       - 8983
+    networks:
+      - fair_net
 
   dataverse:
     container_name: dataverse
@@ -35,11 +43,13 @@ services:
       context: .
       dockerfile: ./docker/dataverse-k8s/payara/Dockerfile
     depends_on:
-      - postgresql
+      - postgres
       - solr
     ports:
       - 8080:8080
     env_file: .env
+    networks:
+      - fair_net
     environment:
       - "CVM_SERVER_NAME=CESSDA" #Optional
       - "WEBHOOK"
@@ -100,3 +110,8 @@ services:
         target: /secrets
         #read_only: true
 
+
+networks:
+  fair_net:
+    ipam:
+      driver: default
