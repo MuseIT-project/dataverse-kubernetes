@@ -37,7 +37,7 @@ pipeline {
                     sh 'docker-compose -f docker-compose.yaml up -d'
                     sh 'docker network connect default fair_eva'
                     sh 'sleep 300s'
-                    sh 'docker exec dataverse cat /etc/hosts|tail -1| awk '{print $1;}''
+                    sh 'docker exec dataverse cat /etc/hosts|tail -1| awk \'{print $1;}\''
                     sh 'docker logs dataverse'
                     sh 'docker exec dataverse bash /secrets/db_sample.sh'
                     sh 'export PGPASSWORD=`cat ./personas/docker-compose/secrets/db/password`'
