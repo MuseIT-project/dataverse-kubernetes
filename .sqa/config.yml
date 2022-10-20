@@ -29,6 +29,6 @@ sqa_criteria:
 
 environment:
   JPL_WORKSPACEDEBUG: "true"
-  JPL_WORKSPACEDEBUGTIMEOUT: 1200
+  JPL_WORKSPACEDEBUGTIMEOUT: "1200"
 
 timeout: 3600
