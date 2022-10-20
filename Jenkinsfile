@@ -3,7 +3,7 @@
 def projectConfig
 
 pipeline {
-    agent any
+    agent { label 'svclarge' }
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
