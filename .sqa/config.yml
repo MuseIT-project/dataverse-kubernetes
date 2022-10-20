@@ -1,22 +1,29 @@
 config:
   project_repos:
-    myrepo:
-      repo: 'https://github.com/EOSC-synergy/dataverse-kubernetes'
-      branch: 5.12
-    github.com/EOSC-synergy/sqaaas-tooling:
+    sqaaas-tooling:
       branch: release/1.4.0
       repo: https://github.com/EOSC-synergy/sqaaas-tooling
+    FAIReva:
+      branch: master
+      repo: https://github.com/EOSC-synergy/FAIR_eva
 
 sqa_criteria:
   qc_style:
      repos:
-       myrepo:
+       dataverse:
          container: dataverse
+         commands:
+          - sh /secrets/db_sample.sh
   QC.FAIR:
     repos:
-      this_repo:
+      fair_assessment:
+        container: fairclient
         commands:
-        - fair-eva.py -ID 123456789/24 -R dspace7
-          -B https://dspace-rest/request --tool_endpoint http://dspace-fair:9090/v1.0/rda/rda_all
-        container: qc.fair_snazzy-malachite-quoll
+        - curl http://fairserver:9090/v1.0/rda/rda_all
+        - sh /fair_assessment/test/test_upload.sh
+        - curl "http://dataverse:8080/api/datasets/export?exporter=dataverse_json&persistentId=doi:10.34622/datarepositorium/SGXCQO"
+        - curl "http://0.0.0.0:8080/api/datasets/export?exporter=dcterms&persistentId=doi:10.34622/datarepositorium/SGXCQO"
+        - curl "http://0.0.0.0:8080/oai?verb=GetRecord&metadataPrefix=oai_dc&identifier=doi:10.34622/datarepositorium/SGXCQO"
+        - curl --location --request POST "http://fairserver:9090/v1.0/rda/rda_all' --header 'Content-Type: application/json' --header 'Cookie: Cookie_1=foobar' --data-raw '{ \"id\": \"https://doi.org/10.34622/datarepositorium/SGXCQO\", \"repo\": \"oai-pmh\", \"oai_base\": \"http://dataverse:8080/oai\", \"lang\": \"en\" }'
+
 timeout: 600
