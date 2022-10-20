@@ -33,11 +33,7 @@ pipeline {
                 echo "Preparing fully containerized environment - :)"
                 dir ('./') {
                     sh 'rm -rf FAIR_eva;git clone https://github.com/EOSC-synergy/FAIR_eva'
-                    sh 'cd FAIR_eva;docker build -t fair_eva .'
-                    sh 'docker run --name=fair_eva -d -p 9090:9090 -p 5000:5000 --network default fair_eva;cd ..'
-                    sh 'export FAIR_EVA=`docker exec fair_eva cat  /etc/hosts|tail -1| awk \'{print $1;}\'`;echo $FAIR_EVA > /tmp/faireva.host'
-                    sh 'docker-compose -f docker-compose.yaml up -d'
-                    sh 'cat /tmp/faireva.host'
+                    sh 'docker-compose -f docker-compose-fair.yaml up -d'
                     sh 'sleep 300s'
                     sh 'export DATAVERSE_HOST=`docker exec dataverse cat /etc/hosts|tail -1| awk \'{print $1;}\'`;echo $DATAVERSE_HOST > /tmp/dataverse.host'
                     sh 'docker logs dataverse'
@@ -49,7 +45,7 @@ pipeline {
                     sh 'curl "http://0.0.0.0:8080/api/datasets/export?exporter=dataverse_json&persistentId=doi:10.34622/datarepositorium/SGXCQO"'
                     sh 'curl "http://0.0.0.0:8080/api/datasets/export?exporter=dcterms&persistentId=doi:10.34622/datarepositorium/SGXCQO"'
                     sh 'curl "http://0.0.0.0:8080/oai?verb=GetRecord&metadataPrefix=oai_dc&identifier=doi:10.34622/datarepositorium/SGXCQO"'
-                    sh "export DATAVERSE_HOST=`cat /tmp/dataverse.host`;curl --location --request POST 'http://0.0.0.0:9090/v1.0/rda/rda_all' --header 'Content-Type: application/json' --header 'Cookie: Cookie_1=foobar' --data-raw '{ \"id\": \"https://doi.org/10.34622/datarepositorium/SGXCQO\", \"repo\": \"oai-pmh\", \"oai_base\": \"http://$DATAVERSE_HOST:8080/oai\", \"lang\": \"en\" }'"
+                    sh "export DATAVERSE_HOST=dataverse;curl --location --request POST 'http://0.0.0.0:9090/v1.0/rda/rda_all' --header 'Content-Type: application/json' --header 'Cookie: Cookie_1=foobar' --data-raw '{ \"id\": \"https://doi.org/10.34622/datarepositorium/SGXCQO\", \"repo\": \"oai-pmh\", \"oai_base\": \"http://$DATAVERSE_HOST:8080/oai\", \"lang\": \"en\" }'"
                     sh 'docker stop dataverse'
                     sh 'docker stop fair_eva'
                     sh 'docker rm fair_eva'
