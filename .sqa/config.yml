@@ -1,8 +1,5 @@
 config:
   project_repos:
-    sqaaas-tooling:
-      branch: release/1.4.0
-      repo: https://github.com/EOSC-synergy/sqaaas-tooling
     FAIReva:
       branch: master
       repo: https://github.com/EOSC-synergy/FAIR_eva
