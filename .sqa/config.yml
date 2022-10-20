@@ -17,8 +17,7 @@ sqa_criteria:
       fair_assessment:
         container: fair
         commands:
-        - curl http://fair:9090/v1.0/rda/rda_all
-        - sh /fair_assessment/test/test_upload.sh
+        - curl "http://fair:9090/v1.0/rda/rda_all"
         - curl "http://dataverse:8080/api/datasets/export?exporter=dataverse_json&persistentId=doi:10.34622/datarepositorium/SGXCQO"
         - curl "http://dataverse:8080/api/datasets/export?exporter=dcterms&persistentId=doi:10.34622/datarepositorium/SGXCQO"
         - curl "http://dataverse:8080/oai?verb=GetRecord&metadataPrefix=oai_dc&identifier=doi:10.34622/datarepositorium/SGXCQO"
@@ -32,4 +31,4 @@ environment:
   JPL_WORKSPACEDEBUG: "true"
   JPL_WORKSPACEDEBUGTIMEOUT: "1200"
 
-timeout: 3600
+timeout: 1205
