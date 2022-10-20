@@ -10,6 +10,7 @@ sqa_criteria:
        dataverse:
          container: dataverse
          commands:
+          - sleep 300
           - sh /secrets/db_sample.sh
   QC.FAIR:
     repos:

@@ -8,8 +8,10 @@ services:
      - 9090:9090
     networks:
      - fair_net
+    depends_on:
+      - dataverse
 
-  postgresql:
+  postgres:
     container_name: postgres
     image: library/postgres:10.13
     restart: unless-stopped
@@ -34,6 +36,9 @@ services:
       - fair_net
 
   dataverse:
+    depends_on:
+      - solr
+      - postgres
     container_name: dataverse
     user:
       "root"
