@@ -12,14 +12,12 @@ pipeline {
     stages {
         stage('SQA : plain code checks') {
             steps {
-                catchError {
-                    script {
-                        projectConfig = pipelineConfig(
-                            configFile: '.sqa/config.yml',
-                            scmConfigs: [ localBranch: true ],
-                            validatorDockerImage: 'eoscsynergy/jpl-validator:2.4.0')
-                        buildStages(projectConfigPlain)
-                    }
+                script {
+                    projectConfig = pipelineConfig(
+                        configFile: '.sqa/config.yml',
+                        scmConfigs: [ localBranch: true ],
+                        validatorDockerImage: 'eoscsynergy/jpl-validator:2.4.0')
+                    buildStages(projectConfig)
                 }
             }
             post {
