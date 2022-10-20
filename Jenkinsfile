@@ -35,7 +35,6 @@ pipeline {
                     sh 'cd FAIR_eva;docker build -t fair_eva .'
                     sh 'docker run --name=fair_eva -d -p 9090:9090 -p 5000:5000 --network default fair_eva;cd ..'
                     sh 'docker-compose -f docker-compose.yaml up -d'
-                    sh 'docker network connect default fair_eva'
                     sh 'sleep 300s'
                     sh 'docker exec dataverse cat /etc/hosts|tail -1| awk \'{print $1;}\''
                     sh 'docker logs dataverse'
