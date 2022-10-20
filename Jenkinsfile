@@ -35,6 +35,7 @@ pipeline {
                     sh 'cd FAIR_eva;docker build -t fair_eva .'
                     sh 'docker stop fair_eva'
                     sh 'docker rm fair_eva'
+                    sh 'docker network create default'
                     sh 'docker run --name=fair_eva -d -p 9090:9090 -p 5000:5000 --network default fair_eva;cd ..'
                     sh 'docker-compose -f docker-compose.yaml up -d'
                     sh 'docker network connect default fair_eva'
