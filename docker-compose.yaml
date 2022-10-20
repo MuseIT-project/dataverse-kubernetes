@@ -95,3 +95,6 @@ services:
         target: /secrets
         #read_only: true
 
+networks:
+  default:
+
