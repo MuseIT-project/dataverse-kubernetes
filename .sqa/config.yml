@@ -10,7 +10,7 @@ sqa_criteria:
        dataverse:
          container: dataverse
          commands:
-          - sleep 300
+          - sleep 120
           - sh /secrets/db_sample.sh
   QC.FAIR:
     repos:
@@ -27,8 +27,8 @@ sqa_criteria:
           --header "Cookie: Cookie_1=foobar"
           --data-raw "{ \"id\": \"https://doi.org/10.34622/datarepositorium/SGXCQO\", \"repo\": \"oai-pmh\", \"oai_base\": \"http://dataverse:8080/oai\", \"lang\": \"en\" }"
 
-environment:
-  JPL_WORKSPACEDEBUG: "true"
-  JPL_WORKSPACEDEBUGTIMEOUT: "1200"
+#environment:
+#  JPL_WORKSPACEDEBUG: "true"
+#  JPL_WORKSPACEDEBUGTIMEOUT: "1200"
 
 timeout: 1205
