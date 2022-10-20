@@ -5,7 +5,7 @@ services:
   fairserver:
 #    image: fairdata/fairdatapoint:1.6.0
     build:
-      context: "./FAIReva"
+      context: "./FAIR_eva"
       dockerfile: "./Dockerfile"
     container_name: fairserver
     restart: always

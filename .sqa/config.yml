@@ -1,6 +1,6 @@
 config:
   project_repos:
-    FAIReva:
+    FAIR_eva:
       branch: master
       repo: https://github.com/EOSC-synergy/FAIR_eva
 
