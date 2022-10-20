@@ -26,34 +26,5 @@ pipeline {
                 }
             }
         }
-
-        stage('Preparing Dataverse for basic integration tests and FAIR assessment') {
-            agent any
-            steps {
-                echo "Preparing fully containerized environment - :)"
-                dir ('./') {
-                    sh 'rm -rf FAIR_eva;git clone https://github.com/EOSC-synergy/FAIR_eva'
-                    sh 'docker-compose -f docker-compose-fair.yaml up -d'
-                    sh 'sleep 300s'
-                    sh 'export DATAVERSE_HOST=`docker exec dataverse cat /etc/hosts|tail -1| awk \'{print $1;}\'`;echo $DATAVERSE_HOST > /tmp/dataverse.host'
-                    sh 'docker logs dataverse'
-                    sh 'docker exec dataverse bash /secrets/db_sample.sh'
-                    sh 'curl http://0.0.0.0:9090/v1.0/rda/rda_all'
-                    sh 'sh ./test/test_upload.sh'
-                    sh 'docker exec dataverse curl http://localhost:8080/api/admin/metadata/exportAll'
-                    sh 'docker exec dataverse curl http://localhost:8080/api/admin/metadata/reExportAll'
-                    sh 'curl "http://0.0.0.0:8080/api/datasets/export?exporter=dataverse_json&persistentId=doi:10.34622/datarepositorium/SGXCQO"'
-                    sh 'curl "http://0.0.0.0:8080/api/datasets/export?exporter=dcterms&persistentId=doi:10.34622/datarepositorium/SGXCQO"'
-                    sh 'curl "http://0.0.0.0:8080/oai?verb=GetRecord&metadataPrefix=oai_dc&identifier=doi:10.34622/datarepositorium/SGXCQO"'
-                    sh "curl --location --request POST 'http://0.0.0.0:9090/v1.0/rda/rda_all' --header 'Content-Type: application/json' --header 'Cookie: Cookie_1=foobar' --data-raw '{ \"id\": \"https://doi.org/10.34622/datarepositorium/SGXCQO\", \"repo\": \"oai-pmh\", \"oai_base\": \"http://dataverse:8080/oai\", \"lang\": \"en\" }'"
-                }
-            }
-            post {
-                cleanup {
-                    cleanWs()
-                }
-            }
-        }
-
-        }
+    }
 }

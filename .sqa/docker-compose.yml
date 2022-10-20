@@ -1,29 +1,68 @@
 version: '3'
+
 services:
 
-  server:
+  fairserver:
 #    image: fairdata/fairdatapoint:1.6.0
     build:
-      context: "./fairdatapoint"
+      context: "./FAIReva"
       dockerfile: "./Dockerfile"
+    container_name: fairserver
     restart: always
     volumes:
-      - ./application-production.yml:/fdp/application-production.yml
-      - ./uapplication.yml:/fdp/old_application.yml
-      - ./rdfdata:/rdfdata
+      - ./FAIReva/application-production.yml:/fdp/application-production.yml
+      - ./FAIReva/uapplication.yml:/fdp/old_application.yml
+      - ./FAIReva/rdfdata:/rdfdata
 
-  client:
+  fairclient:
     image: fairdata/fairdatapoint-client:1.6.0
+    container_name: fairclient
     ports:
       - 80:80
+    volumes:
+      - .:/fair_assessment
     environment:
       - FDP_HOST=server
 
   mongo:
     image: mongo:4.0.12
+    container_name: mongo
     restart: always
     ports:
       - 27017:27017
     volumes:
         - ./mongo/data:/data/db
     command: mongod
+
+
+  postgresql:
+    image: postgres:9.6
+    container_name: postgresql
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_USER=dataverse
+      - POSTGRES_PASSWORD=changeme
+
+  solr:
+    image: iqss/solr-k8s
+    container_name: solr
+    expose:
+      - 8983
+
+  dataverse:
+    build:
+      context: .
+      dockerfile: ./docker/dataverse-k8s/glassfish-dev/Dockerfile
+    image: iqss/dataverse-k8s:dev
+    container_name: dataverse
+    depends_on:
+      - postgresql
+      - solr
+    ports:
+      - 8080:8080
+    volumes:
+      - type: bind
+        source: ./personas/docker-compose/secrets
+        target: /secrets
+        read_only: true
