@@ -32,6 +32,7 @@ pipeline {
             steps {
                 echo "Preparing fully containerized environment - :)"
                 dir ('./') {
+                    sh 'rm -rf FAIR_eva;git clone https://github.com/EOSC-synergy/FAIR_eva'
                     sh 'cd FAIR_eva;docker build -t fair_eva .'
                     sh 'docker run --name=fair_eva -d -p 9090:9090 -p 5000:5000 --network default fair_eva;cd ..'
                     sh 'export FAIR_EVA=`docker exec fair_eva cat  /etc/hosts|tail -1| awk \'{print $1;}\'`'
