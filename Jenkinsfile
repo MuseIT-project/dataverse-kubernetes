@@ -32,6 +32,7 @@ pipeline {
             steps {
                 echo "Preparing fully containerized environment - :)"
                 dir ('./') {
+                    sh 'docker stop fair_eva;docker rm fair_eva'
                     sh 'rm -rf FAIR_eva;git clone https://github.com/EOSC-synergy/FAIR_eva'
                     sh 'docker-compose -f docker-compose-fair.yaml up -d'
                     sh 'sleep 300s'
