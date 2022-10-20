@@ -1,15 +1,11 @@
 ---
 version: '3.5'
 services:
-  qc.fair_snazzy-malachite-quoll:
-    build:
-     context: ./github.com/EOSC-synergy/sqaaas-tooling/QC.FAIR
-     dockerfile: Dockerfile
-    volumes:
-    - source: ./
-      target: /sqaaas-build
-      type: bind
-    working_dir: /sqaaas-build
+  fair:
+    container_name: fair
+    build: ./FAIR_eva/.
+    ports: 
+     - 9090:9090
 
   postgresql:
     container_name: postgres
