@@ -34,7 +34,6 @@ pipeline {
                 dir ('./') {
                     sh 'git clone https://github.com/EOSC-synergy/FAIR_eva'
                     sh 'cd FAIR_eva;docker build -t fair_eva .'
-                    sh 'docker stop fair_eva'
                     sh 'docker rm fair_eva'
                     sh 'docker rm fair_eva2'
                     sh 'docker rm fair_eva_try'
