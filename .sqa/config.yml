@@ -14,7 +14,7 @@ sqa_criteria:
   QC.FAIR:
     repos:
       fair_assessment:
-        container: fairclient
+        container: fair
         commands:
         - curl http://fairserver:9090/v1.0/rda/rda_all
         - sh /fair_assessment/test/test_upload.sh
