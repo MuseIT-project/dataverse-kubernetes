@@ -6,6 +6,8 @@ pipeline {
     agent { label 'svclarge' }
 
     options {
+        lock('svclarge')
+        throttle(['StandaloneByNode'])
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
 
