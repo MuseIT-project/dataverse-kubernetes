@@ -36,9 +36,6 @@ services:
       - fair_net
 
   dataverse:
-    depends_on:
-      - solr
-      - postgres
     container_name: dataverse
     user:
       "root"
@@ -46,7 +43,7 @@ services:
       context: .
       dockerfile: ./docker/dataverse-k8s/payara/Dockerfile
     depends_on:
-      - postgresql
+      - postgres
       - solr
     ports:
       - 8080:8080
